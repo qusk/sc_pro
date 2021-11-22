@@ -72,7 +72,8 @@ Question QuestionData[] = {
 
 int main(void) {
 	
-	int num;                       
+	int num;        
+	int FinNum;					   // 종료 변수
 	char player_name[100];         // 이름
 	int door_ans;                     // 동굴 입구 정답 1
 	int x = 1;                     // while문 변수
@@ -80,6 +81,7 @@ int main(void) {
 	int Select;
 	char c;
 
+	start:;
 	game_main();
 
 
@@ -276,7 +278,21 @@ int main(void) {
 			printf("게임을 종료합니다.");
 			
 		case 2:
-			printf("게임을 종료하였습니다.");
+			printf("정말로 게임을 종료하겠습니까?(다른 숫자를 입력할 시 오류가 발생 할 수 있음)\n");
+			printf("종료 : 1\n");
+			printf("메인화면으로 돌아가기 : 2\n");
+			scanf_s("%d", &FinNum);
+			
+			if (FinNum == 1) {
+				printf("게임이 종료되었습니다.");
+			}
+			else if (FinNum == 2) {
+				goto start;							// start지점으로 돌아감
+				cls;
+			}
+			else {
+				printf("오류가 발생하여서 게임을 종료시킵니다.");
+			}
 			break;
 		default:
 			printf("잘못 입력하셨습니다.\n");
