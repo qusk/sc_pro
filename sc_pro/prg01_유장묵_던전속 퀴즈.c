@@ -75,10 +75,12 @@ int main(void) {
 	int num;        
 	int FinNum;					   // 종료 변수
 	char player_name[100];         // 이름
-	int door_ans;                     // 동굴 입구 정답 1
+	int door_ans;                  // 동굴 입구 정답 1
 	int x = 1;                     // while문 변수
-	int AnswerNum;
-	int Select;
+	int AnswerNum;				   			
+	int Qu_answer;				   // 문제 정답 제출
+	int score;					   // 정답 맞춘 갯수
+	int restart;
 	char c;
 
 	start:;
@@ -104,13 +106,12 @@ int main(void) {
 			// 게임 시작
 			printf("%s님! 던전 속 퀴즈에 오신 것을 환영합니다!!\n", player_name);
 			Sleep(1500);
-			printf("이 게임은 주어진 ☆퀴즈를 전부 풀어내는 것☆이 클리어 조건입니다.\n");
-			Sleep(1500);
-			printf("꼭 클리어하시길바랍니다!!");
-			Sleep(1000);
+			printf("게임이 시작되고 있는 중입니다. \n");
+			Sleep(500);
+			printf("  잠시만 기다려 주세요.");
 			cls;
 
-
+//===============================================================================================
 			// 게임 부분
 			// 동굴입구 
 
@@ -195,6 +196,7 @@ int main(void) {
 			printf("빨리 가보자\n");
 			Sleep(2000);
 
+			middle:;
 
 			cls;
 			printf("??? : 멈춰라!\n 모험가여\n");
@@ -213,7 +215,7 @@ int main(void) {
 			Sleep(1500);
 			printf("조건이 뭐지?\n");
 			Sleep(1500);
-			printf("수호자 : 내가 내는 문제에서 총 5개의 문제만 맞추면 길을 비켜주겠다...\n");
+			printf("수호자 : 내가 내는 문제에서 5개이상만 맞추면 비켜주겠다...\n");
 			Sleep(1500);
 			printf("좋아\n");
 			Sleep(1500);
@@ -222,7 +224,7 @@ int main(void) {
 
 			srand((unsigned)time(NULL));
 
-			for (Select = 0; Select < 5; Select++) {
+			for (Qu_answer = 0; Qu_answer < 5; Qu_answer++) {
 				do {
 					AnswerNum = rand() % (sizeof(QuestionData) / sizeof(QuestionData[0]));
 
@@ -245,17 +247,43 @@ int main(void) {
 
 				if (c == QuestionData[AnswerNum].answer) {
 					printf("\n정답이다 모험가여\n");
+					score++;
 				}
 				else {
 					printf("\n오답이다 모험가여\n");
 				}
 				Sleep(1000);
+
+
+				if (4 < score) {
+					printf("문제를 5개이상 맞췄구나 모험가여\n");
+					Sleep(1500);
+				}
+				else {
+					printf("문제를 5개이상 맞추지 못했구나.\n");
+					Sleep(1500);
+					printf("죽어라!!!");
+					Sleep(2000);
+					printf("클리어에 실패하셨습니다.\n");
+					Sleep(500);
+					printf("다시 하시겠습니까?");
+					printf("1. 다시 시작(문제 풀기 전으로 이동) 2. 게임종료");
+					scanf("%d", &restart);
+
+					if (restart == 1) {
+						goto middle;
+					}
+					else if (restart == 2) {
+						num = 2;
+					}
+				}
 			}
+
+			
 			
 			//게임 마지막 부분
+			//==================================================================================
 			cls;
-			printf("5개의 문제를 맞췄구나 모험가여\n");
-			Sleep(1500);
 			printf("조건은 성립되었다.\n");
 			Sleep(1500);
 			printf("지나가거라\n");
