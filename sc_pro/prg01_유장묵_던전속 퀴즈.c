@@ -81,7 +81,7 @@ int main(void) {
 	int Qu_answer;				   // 문제 정답 제출
 	int score;					   // 정답 맞춘 갯수
 	int restart;
-	char c;
+	char ChaNum;
 
 	start:;
 	game_main();
@@ -224,7 +224,9 @@ int main(void) {
 
 			srand((unsigned)time(NULL));
 
+			
 			for (Qu_answer = 0; Qu_answer < 5; Qu_answer++) {
+				// 문제 랜덤 출력 do while문
 				do {
 					AnswerNum = rand() % (sizeof(QuestionData) / sizeof(QuestionData[0]));
 
@@ -242,10 +244,10 @@ int main(void) {
 
 				printf("\n4개의 번호 중 정답을 선택하세요 ; ");
 
-				c = _getch();
-				c = c - 0x30;
+				ChaNum = _getch();
+				ChaNum = ChaNum - 0x30;
 
-				if (c == QuestionData[AnswerNum].answer) {
+				if (ChaNum == QuestionData[AnswerNum].answer) {
 					printf("\n정답이다 모험가여\n");
 					score++;
 				}
@@ -296,13 +298,10 @@ int main(void) {
 			Sleep(1500);
 
 			cls;
-			gotoxy(15, 4);
 			printf("보물을 손에 넣었습니다.\n");
 			Sleep(1000);
-			gotoxy(15, 5);
 			printf("게임을 클리어하셨습니다.\n");
 			Sleep(1000);
-			gotoxy(15, 6);
 			printf("게임을 종료합니다.");
 			
 		case 2:
