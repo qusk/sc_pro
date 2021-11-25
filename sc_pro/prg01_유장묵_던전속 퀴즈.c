@@ -1,18 +1,12 @@
 #define _CRT_SECURE_NO_WARNINGS
+#define cls	system("cls");
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <windows.h>
 #include <time.h>
-#include <conio.h>
 
-
-#define LEFT 75
-#define RIGHT 77
-#define UP 72
-#define DOWN 80
-#define cls	system("cls");
 
 typedef
 struct {
@@ -33,7 +27,31 @@ void gotoxy(int x, int y) {
 
 }
 
-void gameover() {
+
+void game_main() {
+
+
+	printf("■■■■■■■■■■■■■■■■■■■■■■■■■\n");
+	printf("■                                              ■\n");
+	printf("■                                              ■\n");
+	printf("■                                              ■\n");
+	printf("■                 던전 속 퀴즈                 ■\n");
+	printf("■                                              ■\n");
+	printf("■                                              ■\n");
+	printf("■                                              ■\n");
+	printf("■■■■■■■■■■■■■■■■■■■■■■■■■");
+	printf("\n\n\n");
+
+	printf("1.게임 시작\n");
+	printf("2.게임 종료\n");
+	printf("입력하세요(1(시작) or 2(종료)) >> ");
+
+	
+	
+}
+
+void gamevoer()
+{
 	printf("                                                                                     \n");
 	printf("                                                                                     \n");
 	printf("          ########           #              #       #         #########              \n");
@@ -62,32 +80,8 @@ void gameover() {
 	printf("게임 클리어에 실패하셨습니다.\n");
 	Sleep(500);
 	printf("다시 하시겠습니까?\n");
-	printf("1.(동굴 입구 앞에서 다시 시작)\n 2.(게임 종료) : ");
-
-
-}
-
-
-void game_main() {
-
-
-	printf("■■■■■■■■■■■■■■■■■■■■■■■■■\n");
-	printf("■                                              ■\n");
-	printf("■                                              ■\n");
-	printf("■                                              ■\n");
-	printf("■                 던전 속 퀴즈                 ■\n");
-	printf("■                                              ■\n");
-	printf("■                                              ■\n");
-	printf("■                                              ■\n");
-	printf("■■■■■■■■■■■■■■■■■■■■■■■■■");
-	printf("\n\n\n");
-
-	printf("1.게임 시작\n");
-	printf("2.게임 종료\n");
-	printf("입력하세요(1(시작) or 2(종료)) >> ");
-
-	
-	
+	printf("1.(동굴 입구 앞에서 다시 시작)\n2.(게임 종료)\n");
+	printf("번호를 선택하십시오 : ");
 }
 
 Question QuestionData[] = {
@@ -113,21 +107,22 @@ int main(void) {
 
 	int num;
 	int FinNum;					   // 종료 변수
-	char player_name[100];         // 이름
 	int door_ans;                  // 동굴 입구 정답 1
 	int x = 1;                     // while문 변수
 	int AnswerNum;
 	int Qu_answer;				   // 문제 정답 제출
-	int score = 0;					   // 정답 맞춘 갯수
+	int score = 0;				   // 정답 맞춘 갯수
 	int restart;
-	char ChaNum;
-	char c;
 	int whileNum = 1;
 	int gameover_num;
+	int direct;
+	char player_name[100];         // 이름
+	char ChaNum;
+	char c;
 	char roadQu[50] = { 0 };
 
 
-start:;
+	start:;
 	game_main();
 
 
@@ -146,13 +141,18 @@ start:;
 			printf("플레이어의 이름을 정해주세요 : ");
 			scanf_s("%s", &player_name, 100);
 
+			printf("이제부터 당신의 이름은 %s입니다.\n", player_name);
+			Sleep(1500);
+			cls;
+
 
 			// 게임 시작
 			printf("%s님! 던전 속 퀴즈에 오신 것을 환영합니다!!\n", player_name);
 			Sleep(1500);
 			printf("게임이 시작되고 있는 중입니다. \n");
-			Sleep(500);
-			printf("  잠시만 기다려 주세요.");
+			Sleep(800);
+			printf("잠시만 기다려 주세요.");
+			Sleep(3000);
 			cls;
 
 			//===============================================================================================
@@ -212,10 +212,10 @@ start:;
 
 
 			while (x) {
-				scanf("%d", &door_ans);
+				scanf_s("%d", &door_ans);
 				if (door_ans == 2) {
 					Sleep(2000);
-					printf("동굴 문이 열리고 있어!");
+					printf("동굴 문이 열리고 있어!\n");
 					Sleep(1000);
 					printf("앞으로 가자");
 					Sleep(2000);
@@ -224,84 +224,78 @@ start:;
 				}
 				else {
 					Sleep(1000);
-					printf("문이 열리지 않군...");
+					printf("문이 열리지 않군...\n");
+					Sleep(500);
+					printf("다시 선택해 주십시오 : ");
 					Sleep(1500);
 				}
 			}
 
+			printf("\n");
 			printf("세이브 되었습니다.\n");
-		entrance_cave:;
+			Sleep(1500);
+			cls;
+			entrance_cave:;
 
-			//====================================================================================================
+			//==============================================================================================================================================================================
+
 						// 동굴 안쪽
 			printf("갈림길이잖아 어디로 갈까?\n ");
-			printf(", <-(왼쪽),(오른쪽)-> (방향기를 누르싶시오)\n");
+			printf(", <-(왼쪽 : 1),(오른쪽 : 2)-> \n");
 
-			while (whileNum) {
-				if (_kbhit()) {
-					c = _getch();
-					switch (c) {
-					case LEFT:
-						printf("왼쪽으로 가자");
-						whileNum = 0;
-						break;
-					case RIGHT:
-						printf("오른쪽으로 가자");
-						whileNum = 0;
-						break;
-					case UP:
-						printf("오류가 발생했습니다.");
-						break;
-					case DOWN:
-						printf("오류가 발생했습니다.");
-						break;
-					}
-				}
-			}
+			scanf_s("%d", &direct);
 
-			if (c == LEFT) {
-				gotoxy(15, 3);
+			if (direct == 1) {
+				printf("왼쪽으로 가자\n");
 				for (int i = 0; i < 5; i++) {
+					cls;
 					gotoxy(25, 3);
 					printf("앞으로 이동중\n");
 					Sleep(1000);
-					system("cls");
+					cls;
 				}
-
+				Sleep(2000);
 				printf("덜컹(함정이 작동하는 소리)\n");
+				Sleep(500);
 				printf("무슨 소리지?\n");
-				printf("(바닥이 열림)");
+				Sleep(500);
+				printf("(바닥이 열림)\n");
+				Sleep(500);
 				printf("으아악!!!");
-				gameover();
+				Sleep(1500);
+				gamevoer();
 				scanf_s("%d", &gameover_num);
 
 				if (gameover_num == 1) {
 					goto entrance_cave;
 				}
 				else if (gameover_num == 2) {
-					num = 2;
+					break;
 				}
 			}
-			else if (c == RIGHT) {
+			else if (direct == 2) {
+				printf("오른쪽으로 가자");
 				for (int i = 0; i < 5; i++) {
+					cls;
 					gotoxy(25, 3);
 					printf("앞으로 이동중\n");
 					Sleep(1000);
-					system("cls");
+					cls;
 				}
 			}
 			else {
 				printf("오류 발생");
 				printf("알 수 없는 이유로 인해 게임을 강제 종료 시킵니다.");
-				//num = 3;
+				break;
 			}
 
+		
 
 			printf("앞에 길이 막혀있어\n");
 			Sleep(1000);
 			printf("앞에 문제가 써있는거 같은데?\n");
 			Sleep(2500);
-			system("cls");
+			cls;
 
 			printf("===========================================\n");
 			printf("  한남대학교 컴퓨터공학과 교수님 성함은?   \n");
@@ -309,146 +303,151 @@ start:;
 
 			printf("입력하세요 >>");
 			scanf_s("%s", roadQu, 50);
+
 			if (strncmp(roadQu, "장준혁", 50) == 0) {
 				Sleep(1000);
 				printf("문이 열리고 있어\n");
-				Sleep(500);
+				Sleep(1000);
 				printf("앞으로 계속 가자");
 				for (int i = 0; i < 5; i++) {
+					cls;
 					gotoxy(25, 3);
 					printf("앞으로 이동중\n");
 					Sleep(1000);
-					system("cls");
+					cls;
 				}
 			}
 			else {
 				Sleep(3000);
 				printf("문이 열리지 않군...");
-				gameover();
+				gamevoer();
+				scanf_s("%d", &gameover_num);
 				if (gameover_num == 1) {
 					goto entrance_cave;
 				}
 				else if (gameover_num == 2) {
-					num = 2;
+					break;
 				}
+			}
 
-
-				//========================================================================================================
-							// 보물방 입구
-
-				cls;
-				printf("저기가 보물이 있는 안쪽인가?\n");
-				Sleep(1500);
-				printf("빨리 가보자\n");
-				Sleep(2000);
+			//=================================================
+			// 보물방 입구
 
 			middle:;
 
+			printf("저기가 보물이 있는 안쪽인가?\n");
+			Sleep(1500);
+			printf("빨리 가보자\n");
+			Sleep(2000);
+
+
+			cls;
+			printf("??? : 멈춰라!\n 모험가여\n");
+			Sleep(1500);
+			printf("??? : 누가 감히 보물방에 들어갈려고 하는가?\n");
+			Sleep(1000);
+			printf("누구세요?\n");
+			Sleep(1500);
+			printf("수호자 : 나는 이 보물방을 지키는 수호자다.\n");
+			Sleep(1500);
+			printf("나는 이 동굴에 있는 보물을 가지러 왔다.\n");
+			Sleep(1500);
+			printf("수호자 : 내가 있는데도 그런 패기를 가지고 있다니...\n 좋구나\n");
+			Sleep(1500);
+			printf("수호자 : 하지만, 보물을 가지고 가려면 한가지 조건이 있다...\n");
+			Sleep(1500);
+			printf("조건이 뭐지?\n");
+			Sleep(1500);
+			printf("수호자 : 내가 내는 문제에서 5개이상만 맞추면 비켜주겠다...\n");
+			Sleep(1500);
+			printf("좋아\n");
+			Sleep(1500);
+			printf("수호자 : 좋다... 그럼 시작한다. ");
+			Sleep(5000);
+
+			srand((unsigned)time(NULL));
+
+
+			for (Qu_answer = 0; Qu_answer < 5; Qu_answer++) {
+				// 문제 랜덤 출력 do while문
+				do {
+					AnswerNum = rand() % (sizeof(QuestionData) / sizeof(QuestionData[0]));
+
+				} while (QuestionData[AnswerNum].already_Qu == TRUE);
+				QuestionData[AnswerNum].already_Qu = TRUE;
+
 				cls;
-				printf("??? : 멈춰라!\n 모험가여\n");
-				Sleep(1500);
-				printf("??? : 누가 감히 보물방에 들어갈려고 하는가?\n");
-				Sleep(1000);
-				printf("누구세요?\n");
-				Sleep(1500);
-				printf("수호자 : 나는 이 보물방을 지키는 수호자다.\n");
-				Sleep(1500);
-				printf("나는 이 동굴에 있는 보물을 가지러 왔다.\n");
-				Sleep(1500);
-				printf("수호자 : 내가 있는데도 그런 패기를 가지고 있다니...\n 좋구나\n");
-				Sleep(1500);
-				printf("수호자 : 하지만, 보물을 가지고 가려면 한가지 조건이 있다...\n");
-				Sleep(1500);
-				printf("조건이 뭐지?\n");
-				Sleep(1500);
-				printf("수호자 : 내가 내는 문제에서 5개이상만 맞추면 비켜주겠다...\n");
-				Sleep(1500);
-				printf("좋아\n");
-				Sleep(1500);
-				printf("수호자 : 좋다... 그럼 시작한다. ");
-				Sleep(5000);
 
-				srand((unsigned)time(NULL));
-
-
-				for (Qu_answer = 0; Qu_answer < 5; Qu_answer++) {
-					// 문제 랜덤 출력 do while문
-					do {
-						AnswerNum = rand() % (sizeof(QuestionData) / sizeof(QuestionData[0]));
-
-					} while (QuestionData[AnswerNum].already_Qu == TRUE);
-					QuestionData[AnswerNum].already_Qu = TRUE;
-
-					cls;
-
-					gotoxy(15, 2);
-					printf("%s", QuestionData[AnswerNum].question);
-					for (int i = 0; i < 4; i++) {
-						gotoxy(15, 5 * i + 4);
-						printf("%d %s", i + 1, QuestionData[AnswerNum].number[i]);
-					}
-
-					printf("\n4개의 번호 중 정답을 선택하세요 ; ");
-
-					ChaNum = _getch();
-					ChaNum = ChaNum - 0x30;
-
-					if (ChaNum == QuestionData[AnswerNum].answer) {
-						printf("\n정답이다 모험가여\n");
-						score++;
-					}
-					else {
-						printf("\n오답이다 모험가여\n");
-					}
-					Sleep(1000);
-
-
-					if (4 < score) {
-						printf("문제를 5개이상 맞췄구나 모험가여\n");
-						Sleep(1500);
-					}
-					else {
-						printf("문제를 5개이상 맞추지 못했구나.\n");
-						Sleep(1500);
-						printf("죽어라!!!");
-						Sleep(2000);
-						printf("클리어에 실패하셨습니다.\n");
-						Sleep(500);
-						printf("다시 하시겠습니까?");
-						printf("1. 다시 시작(문제 풀기 전으로 이동) 2. 게임종료");
-						scanf("%d", &restart);
-
-						if (restart == 1) {
-							goto middle;
-						}
-						else if (restart == 2) {
-							num = 2;
-						}
-					}
+				gotoxy(15, 2);
+				printf("%s", QuestionData[AnswerNum].question);
+				for (int i = 0; i < 4; i++) {
+					gotoxy(15, 5 * i + 4);
+					printf("%d %s", i + 1, QuestionData[AnswerNum].number[i]);
 				}
 
 
+				printf("\n\n4개의 번호 중 정답을 선택하세요 ; ");
 
-				//게임 마지막 부분
-				//==================================================================================
-				cls;
-				printf("조건은 성립되었다.\n");
-				Sleep(1500);
-				printf("지나가거라\n");
-				Sleep(1500);
+				ChaNum = _getch();
+				ChaNum = ChaNum - 0x30;
 
-				cls;
-				printf("나이스!!!\n");
-				Sleep(1500);
-				printf("드디어 보물을 손에 넣었다!!");
-				Sleep(1500);
-
-				cls;
-				printf("보물을 손에 넣었습니다.\n");
+				if (ChaNum == QuestionData[AnswerNum].answer) {
+					printf("\n정답이다 모험가여\n");
+					score++;
+				}
+				else {
+					printf("\n오답이다 모험가여\n");
+				}
 				Sleep(1000);
-				printf("게임을 클리어하셨습니다.\n");
-				Sleep(1000);
-				printf("게임을 종료합니다.");
+
+
+				if (4 < score) {
+					printf("문제를 5개이상 맞췄구나 모험가여\n");
+					Sleep(1500);
+				}
+				else {
+					printf("문제를 5개이상 맞추지 못했구나.\n");
+					Sleep(1500);
+					printf("죽어라!!!");
+					Sleep(2000);
+					printf("클리어에 실패하셨습니다.\n");
+					Sleep(500);
+					printf("다시 하시겠습니까?");
+					printf("1. 다시 시작(문제 풀기 전으로 이동) 2. 게임종료");
+					scanf_s("%d", &restart);
+
+					if (restart == 1) {
+						goto middle;
+					}
+					else if (restart == 2) {
+						break;
+					}
+				}
+			}
+
+
+
+			//게임 마지막 부분
+			//==================================================================================
+			cls;
+			printf("조건은 성립되었다.\n");
+			Sleep(1500);
+			printf("지나가거라\n");
+			Sleep(1500);
+
+			cls;
+			printf("나이스!!!\n");
+			Sleep(1500);
+			printf("드디어 보물을 손에 넣었다!!");
+			Sleep(1500);
+
+			cls;
+			printf("보물을 손에 넣었습니다.\n");
+			Sleep(1000);
+			printf("게임을 클리어하셨습니다.\n");
+			Sleep(1000);
+			printf("게임을 종료합니다.");
+			break;
 
 		case 2:
 			printf("정말로 게임을 종료하겠습니까?(다른 숫자를 입력할 시 오류가 발생 할 수 있음)\n");
@@ -458,26 +457,28 @@ start:;
 
 			if (FinNum == 1) {
 				printf("게임이 종료되었습니다.");
+				break;
 			}
 			else if (FinNum == 2) {
-				goto start;							// start지점으로 돌아감
 				cls;
+				goto start;							// start지점으로 돌아감
+
 			}
 			else {
 				printf("오류가 발생하여서 게임을 종료시킵니다.");
 			}
 			break;
+
 		default:
 			printf("잘못 입력하셨습니다.\n");
+			Sleep(500);
 			printf("게임을 종료합니다.");
-			num = 2;
-			break;
-			}
 			break;
 		}
-		return 0;
-	}
+		break;
+		}
+		
+	return 0;
 }
-
-
+	
 
